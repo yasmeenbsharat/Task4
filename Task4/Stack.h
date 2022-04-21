@@ -2,22 +2,24 @@
 
 #include <vector>
 
-template < typename T >
+template < typename T > class Stack;
+template < typename T > std::ostream& operator << (std::ostream& out,
+    const Stack < T >& stack);
 
+template < typename T >
 class Stack {
 
 public:
     Stack();
-    void pop();
+    T pop();
     void push(const T& value);
     std::vector < T >& getVector();
-    bool empty();
-    void printStack();
-    friend std::ostream& operator << (std::ostream& out,
-        const Stack < T >& stack);
+    bool isEmpty();
+    friend std::ostream& operator << < > (std::ostream& out,
+        const Stack& stack);
 
 private:
-    std::vector < T > m_v;
+    std::vector < T > m_vector;
 
 };
 
@@ -26,42 +28,37 @@ Stack < T > ::Stack() {
     std::cout << "Stack constructor\n";
 }
 template < typename T >
-void Stack < T > ::pop() {
+T Stack < T > ::pop() {
     std::cout << "Stack pop \n";
-    if (!m_v.empty())
-        m_v.pop_back();
+    if (m_vector.empty())
+        exit(0);
+    T t = m_vector.back();
+    m_vector.pop_back();
+    return t;
 
 }
 
 template < typename T >
 void Stack < T > ::push(const T& value) {
     std::cout << "Stack push\n";
-    m_v.push_back(value);
+    m_vector.push_back(value);
 
 }
 template < typename T >
 std::vector < T >& Stack < T > ::getVector() {
-    return m_v;
+    return m_vector;
 }
 
 template < typename T >
-bool Stack < T > ::empty() {
-    return m_v.empty();
+bool Stack < T > ::isEmpty() {
+    return m_vector.empty();
 }
 
 template < typename T >
 std::ostream& operator << (std::ostream& out,
     const Stack < T >& stack) {
-    for (size_t i = 0; i < stack.m_v.size(); i++)
-        out << stack.m_v[i] << " ";
+    for (size_t i = 0; i < stack.m_vector.size(); i++)
+        out << stack.m_vector[i] << " ";
+    out << std::endl;
     return out;
-}
-
-template < class T >
-void Stack < T > ::printStack() {
-   
-    for (size_t i = 0; i < m_v.size(); i++)
-        std::cout << m_v[i] << ", ";
-    std::cout << std::endl;
-
 }

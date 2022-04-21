@@ -2,21 +2,23 @@
 
 #include "Stack.h"
 
+template < typename T > class Queue;
+template < typename T > std::ostream& operator << (std::ostream& out,
+    Queue < T >& queue);
 template < class T >
 
 class Queue {
 
 public:
     Queue();
-    void pop();
+    T pop();
     void push(const T& value);
-    void printQueue();
-    friend std::ostream& operator << (std::ostream& out,
-        const Queue < T >& queue);
+    friend std::ostream& operator << < > (std::ostream& out,
+        Queue& queue);
 
 private:
-    Stack < T > m_s;
-    Stack < T > m_s2;
+    Stack < T > m_stack1;
+    Stack < T > m_stack2;
 
 };
 
@@ -26,49 +28,38 @@ Queue < T > ::Queue() {
 }
 
 template < class T >
-void Queue < T > ::pop() {
+T Queue < T > ::pop() {
 
     std::cout << "Queue pop \n";
 
-        if (!m_s2.empty())
-            m_s2.pop();
-        else {
-            if(!m_s.empty()){
-            while (!m_s.empty()) {
-                m_s2.push(m_s.getVector().back());
-                m_s.pop();
-            }
-            m_s2.pop();
-            }
-        }
+    if (m_stack2.isEmpty() && m_stack1.isEmpty())
+        exit(0);
 
-    }
+    while (!m_stack1.isEmpty())
+        m_stack2.push(m_stack1.pop());
 
+    return m_stack2.pop();
 
+}
 
 template < class T >
 void Queue < T > ::push(const T& value) {
     std::cout << "Queue push\n";
-    m_s.push(value);
+    m_stack1.push(value);
 }
 
 template < class T >
 std::ostream& operator << (std::ostream& out,
-    const Queue < T >& queue) {
-    out << queue.getStack();
+    Queue < T >& queue) {
+
+    if (!(queue.m_stack2.isEmpty()))
+        for (size_t i = queue.m_stack2.getVector().size(); i > 0; i--)
+            out << queue.m_stack2.getVector()[i - 1] << ", ";
+
+    if (!(queue.m_stack1.isEmpty()))
+        out << queue.m_stack1;
+
+    out << std::endl;
+
     return out;
-}
-
-template < class T >
-void Queue < T > ::printQueue() {
-
-    if (!m_s2.empty())
-        for (size_t i = m_s2.getVector().size(); i > 0; i--)
-            std::cout << m_s2.getVector()[i - 1] << ", ";
-
-    if (!m_s.empty())
-        m_s.printStack();
-
-    std::cout << std::endl;
-
 }
