@@ -53,8 +53,8 @@ std::ostream& operator << (std::ostream& out,
     Queue < T >& queue) {
 
     if (!(queue.m_stack2.isEmpty()))
-        for (size_t i = queue.m_stack2.getVector().size(); i > 0; i--)
-            out << queue.m_stack2.getVector()[i - 1] << ", ";
+        for (size_t i = queue.m_stack2.getCurrentSize(); i > 0; i--)
+            out << queue.m_stack2.getContainer()[i - 1] << ", ";
 
     if (!(queue.m_stack1.isEmpty()))
         out << queue.m_stack1;
@@ -63,3 +63,5 @@ std::ostream& operator << (std::ostream& out,
 
     return out;
 }
+
+
