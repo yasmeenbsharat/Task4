@@ -47,21 +47,17 @@ void Queue < T > ::push(const T& value) {
     std::cout << "Queue push\n";
     m_stack1.push(value);
 }
-
 template < class T >
 std::ostream& operator << (std::ostream& out,
     Queue < T >& queue) {
 
-    if (!(queue.m_stack2.isEmpty()))
-        for (size_t i = queue.m_stack2.getCurrentSize(); i > 0; i--)
-            out << queue.m_stack2.getContainer()[i - 1] << ", ";
+    for (size_t i = queue.m_stack2.getCurrentSize(); i > 0; i--)
+        out << queue.m_stack2.getContainer()[i - 1] << ", ";
 
-    if (!(queue.m_stack1.isEmpty()))
-        out << queue.m_stack1;
+    out << queue.m_stack1;
 
     out << std::endl;
 
     return out;
 }
-
 

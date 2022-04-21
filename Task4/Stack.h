@@ -19,6 +19,8 @@ public:
     friend std::ostream& operator << < > (std::ostream& out,
         const Stack& stack);
     size_t getCurrentSize();
+    Stack(const Stack &)=delete;
+    Stack& operator=(const Stack&) = delete;
 
 private:
     T* m_container;

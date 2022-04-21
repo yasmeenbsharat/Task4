@@ -34,7 +34,7 @@ int main() {
 		std::cout << "The elements of the vector : ";
 
 		for (size_t i = 0; i < s.getCurrentSize(); i++)
-			std::cout << v[i] << ", ";
+			std::cout << v[i] << " ";
 		std::cout << std::endl;
 
 		//std::cout << s;
